@@ -2,7 +2,6 @@ import pandas as pd
 import streamlit as st
 import io
 import requests
-import urllib
 pd.set_option('display.max_columns', None)
 st.set_page_config(layout="centered")  #use 'wide' mode and use column controls to make it two-column website?
 
