@@ -55,7 +55,7 @@ st.sidebar.text("")
 option2=st.sidebar.multiselect('Select All Tags that apply',
                                ['Age','Culture' ,'Different Ideas and Perspectives','Disability','Ethnicity','First Generation Status','Familial Status',
                                 'Gender Identity and Expression','Geographic Background','Marital Status','National Origin','Race', 'Religious and Spiritual Beliefs'
-                                ,'Sex','Sexual Orientation','Socioeconomic Status','Student Organization','Veteran Status'],default=None, help='Select as many tags as you want')
+                                ,'Sex','Sexual Orientation','Socioeconomic Status','Student Organization','Veteran Status'],help='Select as many tags as you want')
 ########################
 
 
@@ -63,11 +63,21 @@ option2=st.sidebar.multiselect('Select All Tags that apply',
 st.sidebar.text("")
 st.sidebar.text("")
 st.sidebar.text("")
-st.sidebar.write("To submit your events, visit the link: https://www.k-state.edu/diversity-inclusion; Or click the button below to download the application form")
-st.sidebar.download_button(
-    label="Download Form",
-    data=DEIBInventoryForm,
-    file_name='form.pdf')
+st.sidebar.write("Visit our websites for more information: https://www.k-state.edu/diversity-inclusion")
+# st.sidebar.download_button(
+#     label="Download Form",
+#     data=DEIBInventoryForm,
+#     file_name='form.pdf')
+########################
+
+
+######title##########
+title_lis=original_df['Title'].values.tolist()
+title=st.multiselect('Go to',title_lis,help='Select as many events as you want')
+if not title:
+    title_lis1 = title_lis
+else:
+    title_lis1=title
 ########################
 
 
@@ -96,12 +106,13 @@ else:
 
 df=original_df.sort_values(by=option1, ascending=option1_1)
 
-df=df[df[['Title', 'Brief Description for Listing']].apply(lambda x: x.str.contains(search1, case=False)).any(axis=1)
+df=df[df['Title'].isin(title_lis)
+&df[['Title', 'Brief Description for Listing']].apply(lambda x: x.str.contains(search1, case=False)).any(axis=1)
 & df['Location of effort (city/state/country/etc.)'].str.contains(check2,case=False)
 & df['Tags (Please select all categories that apply)'].apply(lambda x: all(word in x for word in option2))]
 # df=df[df['Location of effort (city/state/country/etc.)'].str.contains(check2,case=False)]
 
-
+key = 0
 for i,j in df.iterrows():  # i is index, j is the row content
     #print (j)
     # print (j['Title'])
@@ -124,6 +135,8 @@ for i,j in df.iterrows():  # i is index, j is the row content
 
     st.write('Web: '+j['Website'])
 
+
+
     with st.expander("See more details", expanded=check1):
         st.write('Full Description: '+j['Description'].replace("\n", " "))
         st.write('Contact: '+j['Contact (please provide principle contact name and email/preferred contact number)'])
@@ -134,5 +147,12 @@ for i,j in df.iterrows():  # i is index, j is the row content
                 + '\nNumber of Participants: ' + str(j['Number of Participants (please provide your best estimate if/when applicable)'])
                 + '\nEffort Type: ' + j['Effort Type (Please select all categories that apply)'].replace(";", ", ").rstrip(', '))
 
+        st.download_button(
+            label="Download Form",
+            data=DEIBInventoryForm,
+            key=key,
+            file_name='form.pdf')
+
     st.write (u'\u2500' * 62)   #print a horizon line
 
+    key = key + 1
