@@ -104,6 +104,7 @@ else:
 
 
 
+
 df=original_df.sort_values(by=option1, ascending=option1_1)
 
 df=df[df['Title'].isin(title_lis1)
