@@ -106,7 +106,7 @@ else:
 
 df=original_df.sort_values(by=option1, ascending=option1_1)
 
-df=df[df['Title'].isin(title_lis)
+df=df[df['Title'].isin(title_lis1)
 &df[['Title', 'Brief Description for Listing']].apply(lambda x: x.str.contains(search1, case=False)).any(axis=1)
 & df['Location of effort (city/state/country/etc.)'].str.contains(check2,case=False)
 & df['Tags (Please select all categories that apply)'].apply(lambda x: all(word in x for word in option2))]
