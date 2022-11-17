@@ -63,7 +63,7 @@ option2=st.sidebar.multiselect('Select All Tags that apply',
 st.sidebar.text("")
 st.sidebar.text("")
 st.sidebar.text("")
-st.sidebar.write("Visit our websites for more information: https://www.k-state.edu/diversity-inclusion")
+st.sidebar.write("Visit our [website](https://www.k-state.edu/diversity-inclusion) for more information")
 # st.sidebar.download_button(
 #     label="Download Form",
 #     data=DEIBInventoryForm,
